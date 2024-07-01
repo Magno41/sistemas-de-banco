@@ -51,23 +51,25 @@ def exibir_extrato(saldo, /, *, extrato):
     print("Não foram realizadas movimentações." if not extrato else extrato)
     print(f"\nSaldo:\t\tR$ {saldo:.2f}")
     print("==========================================")
+
+
 def criar_usuario(usuarios):
-    cpf = int(input("Digite o seu CPF! Apenas números!!  :"))
-    usuario = filtrar_usuario(cpf, usuarios)
-
-    if usuario:
-        print("\n@@@ Já existe usuário com esse CPF! @@@")
-        return
-
-    nome = input("Informe o nome completo: ")
-    data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
-    endereco = input("Informe o endereço (logradouro, nro - bairro - cidade/sigla estado): ")
-
-    usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
-
+    while True:
+        try:
+            cpf = int(input("Digite o seu CPF! :"))
+            usuario = filtrar_usuario(cpf, usuarios)
+            if usuario:
+                print("\n@@@ Já existe usuário com esse CPF! @@@")
+                return
+            nome = input("Informe o nome completo: ")
+            data_nascimento = int(input("Informe a data de nascimento (dd-mm-aaaa): "))
+            endereco = input("Informe o endereço (logradouro, nro - bairro - cidade/sigla estado): ")
+            usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
+            print(usuarios)
+            break
+        except:
+            print("@@@Digite apenas Números nos Campos  'Seu CPF' e 'dd-mm-aaaa'@@@@ ")
     print("=== Usuário criado com sucesso! ===")
-
-
 def filtrar_usuario(cpf, usuarios):
     usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
     return usuarios_filtrados[0] if usuarios_filtrados else None
